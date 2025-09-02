@@ -7,14 +7,14 @@ import {
 	timestamp,
 } from "drizzle-orm/pg-core";
 
-const jobsStatusEnum = [
+export const jobsStatusEnum = [
 	"applied",
 	"considered",
 	"offered",
 	"rejected",
 ] as const;
-const jobsTypeEnum = ["onsite", "remote", "hybrid"] as const;
-const interviewStatusEnum = [
+export const jobsTypeEnum = ["onsite", "remote", "hybrid"] as const;
+export const interviewStatusEnum = [
 	"scheduled",
 	"occurred",
 	"passed",
@@ -81,11 +81,12 @@ export const verification = pgTable("verification", {
 	),
 });
 
-const jobs = pgTable("jobs", {
+export const jobs = pgTable("jobs", {
 	id: serial("id").primaryKey(),
 	company: text("company").notNull(),
 	position: text("position").notNull(),
 	location: text("location").notNull(),
+	pay: integer().notNull(),
 	type: text("type")
 		.notNull()
 		.default("onsite")
@@ -98,7 +99,7 @@ const jobs = pgTable("jobs", {
 	notes: text("notes"),
 	job_url: text("job_url"),
 
-	userId: integer("user_id")
+	userId: text("user_id")
 		.notNull()
 		.references(() => user.id),
 
@@ -110,7 +111,7 @@ const jobs = pgTable("jobs", {
 		.notNull(),
 });
 
-const interviews = pgTable("interviews", {
+export const interviews = pgTable("interviews", {
 	id: serial("id").primaryKey(),
 	contact_email: text("contact_email").notNull(),
 	contact_name: text("contact_name").notNull(),
@@ -121,7 +122,7 @@ const interviews = pgTable("interviews", {
 	date_scheduled: timestamp("scheduled_date").notNull(),
 	notes: text("notes"),
 
-	userId: integer("user_id")
+	userId: text("user_id")
 		.notNull()
 		.references(() => user.id),
 	jobId: integer("job_id")
@@ -135,3 +136,12 @@ const interviews = pgTable("interviews", {
 		.$defaultFn(() => /* @__PURE__ */ new Date())
 		.notNull(),
 });
+
+export const schema = {
+	user,
+	session,
+	account,
+	verification,
+	jobs,
+	interviews,
+};
