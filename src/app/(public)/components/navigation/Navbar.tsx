@@ -4,12 +4,12 @@ import React from "react";
 
 const Navbar = () => {
 	return (
-		<nav className="w-full mx-auto container flex items-center justify-between p-4">
+		<nav className="w-full h-16 mx-auto container flex items-center justify-between">
 			<Link href="/" className="font-bold">
 				JobTracker
 			</Link>
 
-			<div className="flex items-center">
+			<div className="flex items-center h-full">
 				<NavLink href="/login" name="Login" />
 				<NavLink href="/register" name="Register" />
 			</div>

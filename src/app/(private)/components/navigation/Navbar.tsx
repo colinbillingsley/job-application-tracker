@@ -28,12 +28,12 @@ const navbarLinks: NavLinkType[] = [
 
 const Navbar = () => {
 	return (
-		<nav className="w-full mx-auto container flex items-center justify-between">
+		<nav className="w-full h-16 mx-auto container flex items-center justify-between">
 			<Link href="/" className="font-bold">
 				JobTracker
 			</Link>
 
-			<div className="flex items-center">
+			<div className="hidden md:flex items-center h-full">
 				{navbarLinks.map((link) => (
 					<NavLink key={link.href} {...link} />
 				))}

@@ -144,7 +144,7 @@ const LoginForm = () => {
 				)}
 
 				<Button
-					type="button"
+					type="submit"
 					disabled={loading}
 					size={"lg"}
 					onClick={handleSubmit}

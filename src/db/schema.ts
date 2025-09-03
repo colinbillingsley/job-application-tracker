@@ -5,21 +5,26 @@ import {
 	pgTable,
 	serial,
 	timestamp,
+	numeric,
+	pgEnum,
 } from "drizzle-orm/pg-core";
 
-export const jobsStatusEnum = [
+export const jobsStatusEnum = pgEnum("job_status", [
 	"applied",
-	"considered",
+	"under_review",
+	"interview",
 	"offered",
+	"accepted",
 	"rejected",
-] as const;
-export const jobsTypeEnum = ["onsite", "remote", "hybrid"] as const;
-export const interviewStatusEnum = [
+]);
+export const jobsTypeEnum = pgEnum("job_type", ["onsite", "remote", "hybrid"]);
+export const interviewStatusEnum = pgEnum("interview_status", [
 	"scheduled",
 	"occurred",
 	"passed",
 	"failed",
-] as const;
+]);
+export const payTypeEnum = pgEnum("pay_type", ["hourly", "salary"]);
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -86,15 +91,10 @@ export const jobs = pgTable("jobs", {
 	company: text("company").notNull(),
 	position: text("position").notNull(),
 	location: text("location").notNull(),
-	pay: integer().notNull(),
-	type: text("type")
-		.notNull()
-		.default("onsite")
-		.$type<(typeof jobsTypeEnum)[number]>(),
-	status: text("status")
-		.notNull()
-		.default("applied")
-		.$type<(typeof jobsStatusEnum)[number]>(),
+	pay: numeric("pay", { precision: 10, scale: 2 }).notNull(),
+	payType: payTypeEnum("pay_type").notNull().default("hourly"),
+	jobType: jobsTypeEnum("job_type").notNull().default("onsite"),
+	status: jobsStatusEnum("job_status").notNull().default("applied"),
 	appliedDate: text("date_applied").notNull(),
 	notes: text("notes"),
 	job_url: text("job_url"),
@@ -115,10 +115,9 @@ export const interviews = pgTable("interviews", {
 	id: serial("id").primaryKey(),
 	contact_email: text("contact_email").notNull(),
 	contact_name: text("contact_name").notNull(),
-	status: text("status")
+	status: interviewStatusEnum("interview_status")
 		.notNull()
-		.default("scheduled")
-		.$type<(typeof interviewStatusEnum)[number]>(),
+		.default("scheduled"),
 	date_scheduled: timestamp("scheduled_date").notNull(),
 	notes: text("notes"),
 

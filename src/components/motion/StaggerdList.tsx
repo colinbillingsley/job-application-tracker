@@ -1,9 +1,16 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
 
-export function StaggeredList({ children }: { children: ReactNode[] }) {
+export function StaggeredList({
+	children,
+	className,
+}: {
+	children: ReactNode[];
+	className?: string;
+}) {
 	return (
 		<motion.ul
 			initial="hidden"
@@ -15,6 +22,7 @@ export function StaggeredList({ children }: { children: ReactNode[] }) {
 					transition: { staggerChildren: 0.1 },
 				},
 			}}
+			className={cn(``, className)}
 		>
 			{children.map((child, i) => (
 				<motion.li

@@ -1,10 +1,24 @@
 import React, { ReactNode } from "react";
 import { ScaleIn } from "../motion/ScaleIn";
+import { cn } from "@/lib/utils";
 
-const PageContainer = ({ children }: { children: ReactNode }) => {
+const PageContainer = ({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) => {
 	return (
 		<ScaleIn>
-			<div className={`container mx-auto h-full w-full mt-12`}>{children}</div>
+			<div
+				className={cn(
+					`container mx-auto min-h-screen h-full w-full my-12 px-4`,
+					className
+				)}
+			>
+				{children}
+			</div>
 		</ScaleIn>
 	);
 };

@@ -13,7 +13,7 @@ const NavLink = ({ href, name, icon, className }: NavLinkType) => {
 		<Link
 			href={href}
 			className={cn(
-				`flex items-center gap-1 transition-all py-4 px-3 ${
+				`flex items-center gap-1 transition-all h-full px-3 ${
 					isActive ? "font-bold bg-primary/10 border-b-2 border-b-primary" : ""
 				}`,
 				className
